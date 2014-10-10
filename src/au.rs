@@ -109,6 +109,10 @@ impl Muxer {
               _ => fail!("au::Muxer: Unsupported sample type {} (INPUT)", audio.sample_type)
             };
 
+            if audio.endian != aurora::endian::Big {
+              fail!("au::Muxer: Samples must be big endian (INPUT)");
+            }
+
             unsafe {
               std::slice::bytes::copy_memory(d.slice_mut( 4,  8), std::mem::transmute::<u32, [u8, .. 4]>(24u32.to_be()));
               std::slice::bytes::copy_memory(d.slice_mut( 8, 12), std::mem::transmute::<u32, [u8, .. 4]>(0xFFFFFFFF));
