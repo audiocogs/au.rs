@@ -1,0 +1,19 @@
+[root]
+name = "au-player"
+version = "0.0.1"
+dependencies = [
+ "au 0.0.1",
+ "aurora 0.0.1",
+]
+
+[[package]]
+name = "au"
+version = "0.0.1"
+dependencies = [
+ "aurora 0.0.1",
+]
+
+[[package]]
+name = "aurora"
+version = "0.0.1"
+

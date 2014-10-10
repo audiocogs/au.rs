@@ -1,0 +1,1 @@
+These test vectors are from http://www-mmsp.ece.mcgill.ca/documents/AudioFormats/AU/Samples.html, and they have all copyright on all files in this directory.

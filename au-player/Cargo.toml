@@ -1,0 +1,10 @@
+[package]
+name = "au-player"
+version = "0.0.1"
+authors = ["Jens Nockert <jens@nockert.se>"]
+
+[dependencies.au]
+path = ".."
+
+[dependencies.aurora]
+path = "../../aurora.rs"
