@@ -22,7 +22,7 @@ fn main() {
   });
 
   spawn(proc() {
-    au::Muxer::new(source_1, sink_2).run();
+    aurora::caf::Muxer::new(source_1, sink_2).run();
   });
 
   aurora::stdout::Output::new(source_2).run();
