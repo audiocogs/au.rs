@@ -7,4 +7,4 @@ authors = ["Jens Nockert <jens@nockert.se>"]
 path = ".."
 
 [dependencies.aurora]
-path = "../../aurora.rs"
+git = "https://github.com/audiocogs/aurora.rs"
