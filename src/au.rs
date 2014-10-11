@@ -44,22 +44,22 @@ impl Demuxer {
 
     stream.skip(data_offset as uint - 24); // Jump to the data.
 
-    let mut final = false;
+    let mut last = false;
     let mut remaining_data = data_size as uint;
 
     let sample_size = aurora::sample_type::size(sample_type);
     let chunk_size = (sample_size * channels / 8) * 1024; // Random number
 
-    while !final {
+    while !last {
       self.sink.write(|audio| {
         audio.data.grow(std::cmp::min(chunk_size, remaining_data), 0);
 
         stream.read(audio.data.as_mut_slice()); // If size is unknown, then this will fail
 
         remaining_data -= audio.data.len();
-        final = remaining_data == 0;
+        last = remaining_data == 0;
 
-        audio.final = final;
+        audio.last = last;
         audio.channels = channels;
         audio.sample_rate = sample_rate;
         audio.endian = aurora::endian::Big;
@@ -84,12 +84,12 @@ impl Muxer {
 
   pub fn run(&mut self) {
     let mut first = true;
-    let mut final = false;
+    let mut last = false;
 
     let source = &mut self.source;
     let sink = &mut self.sink;
 
-    while !final {
+    while !last {
       source.read(|audio| {
         if first {
           sink.write(|binary| {
@@ -125,14 +125,14 @@ impl Muxer {
           });
         }
 
-        final = audio.final;
+        last = audio.last;
 
         sink.write(|binary| {
           binary.data.grow(audio.data.len(), 0);
 
           std::slice::bytes::copy_memory(binary.data.as_mut_slice(), audio.data.as_slice());
 
-          binary.final = final;
+          binary.last = last;
         });
       });
     }
@@ -161,7 +161,7 @@ mod tests {
     });
 
     source_1.read(|audio| {
-      assert_eq!(audio.final, false);
+      assert_eq!(audio.last, false);
       assert_eq!(audio.channels, 2);
       assert_eq!(audio.sample_rate, 8000.0);
       assert_eq!(audio.endian, aurora::endian::Big);
