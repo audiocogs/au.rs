@@ -23,7 +23,7 @@ impl Demuxer {
     stream.read(fourcc);
 
     if fourcc != b".snd" {
-      fail!("au::Demuxer: Stream did not start with fourcc '.snd' had bytes {:x}{:x}{:x}{:x} (INPUT)", fourcc[0], fourcc[1], fourcc[2], fourcc[3]);
+      panic!("au::Demuxer: Stream did not start with fourcc '.snd' had bytes {:x}{:x}{:x}{:x} (INPUT)", fourcc[0], fourcc[1], fourcc[2], fourcc[3]);
     }
 
     let data_offset = stream.read_be_u32();
@@ -106,11 +106,11 @@ impl Muxer {
               Unsigned(32) => 5,
               Float(32) => 6,
               Float(64) => 7,
-              _ => fail!("au::Muxer: Unsupported sample type {} (INPUT)", audio.sample_type)
+              _ => panic!("au::Muxer: Unsupported sample type {} (INPUT)", audio.sample_type)
             };
 
             if audio.endian != aurora::endian::Big {
-              fail!("au::Muxer: Samples must be big endian (INPUT)");
+              panic!("au::Muxer: Samples must be big endian (INPUT)");
             }
 
             unsafe {

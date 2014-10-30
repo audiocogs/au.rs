@@ -3,17 +3,18 @@ name = "au-player"
 version = "0.0.1"
 dependencies = [
  "au 0.0.1",
- "aurora 0.0.1",
+ "aurora 0.0.1 (git+https://github.com/audiocogs/aurora.rs)",
 ]
 
 [[package]]
 name = "au"
 version = "0.0.1"
 dependencies = [
- "aurora 0.0.1",
+ "aurora 0.0.1 (git+https://github.com/audiocogs/aurora.rs)",
 ]
 
 [[package]]
 name = "aurora"
 version = "0.0.1"
+source = "git+https://github.com/audiocogs/aurora.rs#76a61f01b220a51442c801a7a4df2bba915e919d"
 
